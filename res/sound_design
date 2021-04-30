@@ -1,0 +1,38 @@
+PRESET>Use a preset then tweak to taste
+BREAK IT>Use an instrument, sample or preset in a way other than how it is meant to be used (i.e. play a bass patch like a chord or an FX like a lead)
+RESAMPLE>Try sending something out of your DAW into the real world (through a speaker) and then recording it back in (via a microphone)
+BREAK>Take a break
+SUBTRACT>Use subtractive synthesis
+ADD>Use additive synthesis
+MULTIPLY>Use frequency modulation synthesis
+GRANULATE>Use granular synthesis
+SAMPLE>Use a sampler to create an instrument from audio
+VERB>Use reverb
+DELAY>Use delay
+DISTORT>Add distortion / saturation / overdrive / etc.
+WOBBLEWOBBLE>Use an LFO
+LAYER>Layer 2 or more sounds to create a composite sound
+MOD>Use a modulation effect (phaser, flanger, chorus, etc.) 
+SIN>Use sine waves as the basis of the sound
+TRI>Use triangle waves as the basis of the sound
+SQU>Use square waves as the basis of the sound
+SAW>Use saw waves as the basis of the sound
+COPY>Copy a sound from one of your favourite songs
+BE NATURAL>Listen to a sound in nature. Let it inspire your sound design
+BE SMOOTH>Use a sound with a long attack
+BE SMOOTH>Use a sound with a long release
+GET PADDY>Use a sound with a long attack and a long release
+GET PLUCKY>Use a sound with a short attack and release
+WOWOWOW>Add filter modulation to your sound
+MAKE SOME NOISE>Add noise
+RESAMPLE>Resample something multiple times. Apply FX between each resample
+ARP>Use an arpeggiator
+HARDWARE>Find and use a piece of hardware to recreate one of your existing sounds 
+FLATTEN>Flatten a MIDI track to Audio and then process it
+NATIVE>Use only native DAW devices for your sound
+3RD PARTY>Use only 3rd party plugins for your sound
+START FRESH>Taking an existing part and delete all instruments and FX but keep the MIDI information. Now create a whole new sound for that part
+SIMPLIFY>Use a sampler
+GO ANALOG>Use an analog modelling synthesizer
+GET PHYSICAL>Use a physical modelling synthesizer
+SHOW SOME LOVE>Stop what you are doing and consider sharing something about INSPIR on Twitter or Facebook! Be sure to tag @elphntx
