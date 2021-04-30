@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.2
+ *  INSPIR, v0.3
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <time.h>
 #define MAXARGS 2
+#define COMMANDS 5
 
 //  Number of suggestions each category contains
 #define WRITE 48
@@ -18,8 +19,23 @@
 #define SOUND 38
 #define MIX 21
 
+const char *program_version = "\nINSPIR CLI 0.3";
+const char *bug_address = "<bruno.pezer@tutanota.com>";
+
+//  Program documentation
+static char doc[] = "\nINSPIR is a tool to help overcome creative blocks and get inspiration while producing music.\nINSPIR works by generating random, musically relevant suggestions for you to apply in your productions.\nThere are a total of 137 suggestions divided into 4 categories, representing different stages of the\nproduction process; Writing, Arranging, Sound Design or Mixing.\nA suggestion for any of the categories can be obtained by inputting the corresponding command:\n\n\t  write\n\t  arrange\n\t  sound\n\t  mix";
+static char usage[] = "\nUSAGE>    inspir <category>\nEXAMPLE>  inspir write         will randomly display a suggestion to apply in your writing process.";
+//  Accepted arguments
+static char args_doc[] = "category";
+
+//  Accepted options.
+//  Enumeration is used in order
+//  to easily pass the options to
+//  the switch control structure
 typedef enum {write, arrange, sound, mix, help} Command;
 
+//  Associates the string arguments
+//  with the appropriate enum options
 const static struct {
     Command cmd;
     const char *str;
@@ -31,27 +47,30 @@ const static struct {
     {help, "help"}
 };
 
-const char *parse_str(const char *str) {
-    unsigned int str_size = sizeof(str) / sizeof(str[0]);   //  Calculate the size of the input string
-    char *parsed_str = malloc(str_size);                    //  Allocate memory from the heap
+//  Converts the user input into lowercase
+void parse_str(char *str) {
     int i = 0;
-    while(str[i]) {
-        parsed_str[i] = tolower(str[i]);
+    while (str[i]) {
+        str[i] = tolower(str[i]);
         i++;
     }
-    return parsed_str;
 }
 
+//  Converts the string argument to the corresponding enum command
 Command convert_command(const char *str) {
-    for (size_t j = 0; j < sizeof(conversion) / sizeof(conversion[0]); j++) {
-        if (strcmp(str, conversion[j].str) == 0) return conversion[j].cmd;
-    }
-    puts("No such category.");
-    return help;
+    for (size_t i = 0; i < COMMANDS; i++)
+        if (strcmp(str, conversion[i].str) == 0) 
+            return conversion[i].cmd;
+    return 42;  //  Returned when a non-recognized command is provided.
 }
 
-void inspir(Command cmd) {
-    switch(cmd) {
+//  Opens the file and returns the line of text
+//char* read_paper(FILE f, unsigned int line) {
+//    return line;
+//}
+
+void inspir(const char *str) {
+    switch(convert_command(str)) {
         case write:
             puts("selected: write");
             printf("%d", (rand() % WRITE) + 1);
@@ -69,7 +88,10 @@ void inspir(Command cmd) {
             printf("%d", (rand() % MIX) + 1);
             break;
         case help:
-            puts("selected: help");
+            puts(program_version);
+            puts(doc);
+            puts(usage);
+            printf("\nSend bug reports to %s\n", bug_address);
             break;
         default:
             puts("No such category");
@@ -77,9 +99,8 @@ void inspir(Command cmd) {
     }
 }
 
-char* read_paper() {}
-
 int main(int argc, char *argv[]) {
     srand(time(NULL));
-    inspir(convert_command(parse_str(argv[1])));
+    parse_str(argv[1]);
+    inspir(argv[1]);
 }
