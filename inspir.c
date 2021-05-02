@@ -66,7 +66,12 @@ Command convert_command(const char *str) {
 
 //  Opens the file and returns the line of text
 //char* read_paper(FILE f, unsigned int line) {
-//    return line;
+//    char *str;
+//    size_t i = 0;
+//    while (str[i]) {
+//      if (str[i] == '>') str[i] = '\n';    
+//    }
+//    return str;    
 //}
 
 void inspir(const char *str) {
