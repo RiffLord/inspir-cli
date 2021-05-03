@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.3
+ *  INSPIR, v0.4
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -12,6 +12,7 @@
 #include <time.h>
 #define MAXARGS 2
 #define COMMANDS 5
+#define LINECHARS 500
 
 //  Number of suggestions each category contains
 #define WRITE 48
@@ -28,14 +29,24 @@ static char usage[] = "\nUSAGE>    inspir <category>\nEXAMPLE>  inspir write    
 //  Accepted arguments
 static char args_doc[] = "category";
 
-//  Accepted options.
-//  Enumeration is used in order
-//  to easily pass the options to
-//  the switch control structure
+/*  
+ *  Accepted options.
+ *  Enumeration is used in order
+ *  to easily pass the options to
+ *  the switch control structure
+ */
 typedef enum {write, arrange, sound, mix, help} Command;
 
-//  Associates the string arguments
-//  with the appropriate enum options
+//  Filenames for each category of suggestions
+const char *FNARRNG = "arranging";
+const char *FNMIX = "mixing";
+const char *FNWRITE = "writing";
+const char *FNSOUND = "sound_design";
+
+/*
+ *  Associates the string arguments
+ *  with the appropriate enum options
+ */
 const static struct {
     Command cmd;
     const char *str;
@@ -64,33 +75,51 @@ Command convert_command(const char *str) {
     return 42;  //  Returned when a non-recognized command is provided.
 }
 
-//  Opens the file and returns the line of text
-//char* read_paper(FILE f, unsigned int line) {
-//    char *str;
-//    size_t i = 0;
-//    while (str[i]) {
-//      if (str[i] == '>') str[i] = '\n';    
-//    }
-//    return str;    
-//}
+//  Formats the line of text for display
+void parse_line(char* line) {
+    size_t i = 0;
+    while (line[i]) {
+      if (line[i] == '>') line[i] = '\n';
+      i++;  
+    }  
+}
+
+//  Reads a line of text from the file
+void read_file(const char *filename, unsigned int line) {
+    FILE *cfPtr;
+    char path[50] = "..\\res\\";
+    strcat(path, filename);
+    puts(path);
+    if ((cfPtr = fopen(path, "r")) == NULL) {
+        puts("Couldn't open file");
+    } else {
+        char suggestion[LINECHARS];
+        fgets(suggestion, LINECHARS, cfPtr);
+
+        while (!feof(cfPtr)) {
+            //  TODO: Get to the desired line
+            parse_line(suggestion);
+            printf("%s\n", suggestion);
+            fgets(suggestion, 500, cfPtr);
+        }
+
+    fclose(cfPtr);
+    }
+}
 
 void inspir(const char *str) {
     switch(convert_command(str)) {
         case write:
-            puts("selected: write");
-            printf("%d", (rand() % WRITE) + 1);
+            read_file(FNWRITE, (rand() % WRITE) + 1);
             break;
         case arrange:
-            puts("selected: arrange");
-            printf("%d", (rand() % ARRNG) + 1);
+            read_file(FNARRNG, (rand() % ARRNG) + 1);
             break;
         case sound:
-            puts("selected: sound design");
-            printf("%d", (rand() % SOUND) + 1);
+            read_file(FNSOUND, (rand() % SOUND) + 1);
             break;
         case mix:
-            puts("selected: mix");
-            printf("%d", (rand() % MIX) + 1);
+            read_file(FNMIX, (rand() % MIX) + 1);
             break;
         case help:
             puts(program_version);
