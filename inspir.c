@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.4
+ *  INSPIR, v0.5
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -15,10 +15,10 @@
 #define LINECHARS 500
 
 //  Number of suggestions each category contains
-#define WRITE 48
-#define ARRNG 30
-#define SOUND 38
-#define MIX 21
+#define WRITE 47
+#define ARRNG 29
+#define SOUND 37
+#define MIX 20
 
 const char *program_version = "\nINSPIR CLI 0.3";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
@@ -85,23 +85,37 @@ void parse_line(char* line) {
 }
 
 //  Reads a line of text from the file
+//  Reads a line of text from the file
 void read_file(const char *filename, unsigned int line) {
     FILE *cfPtr;
     char path[50] = "..\\res\\";
+    unsigned int currentline = 0;
     strcat(path, filename);
-    puts(path);
+    //puts(path);
     if ((cfPtr = fopen(path, "r")) == NULL) {
         puts("Couldn't open file");
     } else {
         char suggestion[LINECHARS];
-        fgets(suggestion, LINECHARS, cfPtr);
-
         while (!feof(cfPtr)) {
-            //  TODO: Get to the desired line
+            fgets(suggestion, LINECHARS, cfPtr);
+            if (currentline == line) {
+                parse_line(suggestion);
+                //printf("%d: %s\n", currentline + 1, suggestion);
+                printf("\n%s\n", suggestion);
+                break;                
+            }
+            currentline++;
+            //  Reads the entire file
+            /*   
             parse_line(suggestion);
-            printf("%s\n", suggestion);
-            fgets(suggestion, 500, cfPtr);
+            printf("%d: %s\n", currentline + 1, suggestion);
+            fgets(suggestion, LINECHARS, cfPtr);
+            currentline++;
+            */
         }
+        //  Reads the last line in the file
+        //fgets(suggestion, LINECHARS, cfPtr);
+        //printf("%d: %s\n", currentline + 1, suggestion);
 
     fclose(cfPtr);
     }
@@ -109,17 +123,26 @@ void read_file(const char *filename, unsigned int line) {
 
 void inspir(const char *str) {
     switch(convert_command(str)) {
+        unsigned int line;
         case write:
-            read_file(FNWRITE, (rand() % WRITE) + 1);
+            line = (rand() % WRITE);
+            //printf("%d\n", line);
+            read_file(FNWRITE, line);
             break;
         case arrange:
-            read_file(FNARRNG, (rand() % ARRNG) + 1);
+            line = (rand() % ARRNG);
+            //printf("%d\n", line);
+            read_file(FNARRNG, line);
             break;
         case sound:
-            read_file(FNSOUND, (rand() % SOUND) + 1);
+            line = (rand() % SOUND);
+            //printf("%d\n", line);
+            read_file(FNSOUND, line);
             break;
         case mix:
-            read_file(FNMIX, (rand() % MIX) + 1);
+            line = (rand() % MIX);
+            //printf("%d\n", line);
+            read_file(FNMIX, line);
             break;
         case help:
             puts(program_version);

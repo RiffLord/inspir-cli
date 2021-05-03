@@ -8,8 +8,8 @@ VERB>Use reverb
 DELAY>Use delay
 EQ>Use a simple 3-band EQ instead of a paragraphic EQ
 EQ>Use only 1 band of EQ
-EQ>Use an EQ plugin you’ve never used or haven’t used for a while
-COMPRESS>Use a compressor plugin you’ve never used or haven’t used for a while
+EQ>Use an EQ plugin you've never used or haven't used for a while
+COMPRESS>Use a compressor plugin you've never used or haven't used for a while
 AUTO PAN>Use Auto Pan
 MOD>Use a modulation effect (phaser, flanger, chorus, etc.)
 COMMIT>Commit to all the processing on your tracks (use Freeze Track) and then start mixing again if necessary 
