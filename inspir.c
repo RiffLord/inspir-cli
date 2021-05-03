@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.5
+ *  INSPIR, v0.6
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -10,6 +10,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+
 #define MAXARGS 2
 #define COMMANDS 5
 #define LINECHARS 500
@@ -20,7 +21,8 @@
 #define SOUND 37
 #define MIX 20
 
-const char *program_version = "\nINSPIR CLI 0.3";
+const char *program_version = "\nINSPIR CLI 0.6";
+const char *elphnt_link = "<https://elphnt.io/store/inspir-paper/>";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
 
 //  Program documentation
@@ -38,10 +40,10 @@ static char args_doc[] = "category";
 typedef enum {write, arrange, sound, mix, help} Command;
 
 //  Filenames for each category of suggestions
-const char *FNARRNG = "arranging";
-const char *FNMIX = "mixing";
-const char *FNWRITE = "writing";
-const char *FNSOUND = "sound_design";
+const char *fn_arrang = "arranging";
+const char *fn_mix = "mixing";
+const char *fn_write = "writing";
+const char *fn_sound = "sound_design";
 
 /*
  *  Associates the string arguments
@@ -85,13 +87,11 @@ void parse_line(char* line) {
 }
 
 //  Reads a line of text from the file
-//  Reads a line of text from the file
 void read_file(const char *filename, unsigned int line) {
     FILE *cfPtr;
     char path[50] = "..\\res\\";
     unsigned int currentline = 0;
     strcat(path, filename);
-    //puts(path);
     if ((cfPtr = fopen(path, "r")) == NULL) {
         puts("Couldn't open file");
     } else {
@@ -100,23 +100,11 @@ void read_file(const char *filename, unsigned int line) {
             fgets(suggestion, LINECHARS, cfPtr);
             if (currentline == line) {
                 parse_line(suggestion);
-                //printf("%d: %s\n", currentline + 1, suggestion);
                 printf("\n%s\n", suggestion);
                 break;                
             }
             currentline++;
-            //  Reads the entire file
-            /*   
-            parse_line(suggestion);
-            printf("%d: %s\n", currentline + 1, suggestion);
-            fgets(suggestion, LINECHARS, cfPtr);
-            currentline++;
-            */
         }
-        //  Reads the last line in the file
-        //fgets(suggestion, LINECHARS, cfPtr);
-        //printf("%d: %s\n", currentline + 1, suggestion);
-
     fclose(cfPtr);
     }
 }
@@ -126,32 +114,29 @@ void inspir(const char *str) {
         unsigned int line;
         case write:
             line = (rand() % WRITE);
-            //printf("%d\n", line);
-            read_file(FNWRITE, line);
+            read_file(fn_write, line);
             break;
         case arrange:
             line = (rand() % ARRNG);
-            //printf("%d\n", line);
-            read_file(FNARRNG, line);
+            read_file(fn_arrang, line);
             break;
         case sound:
             line = (rand() % SOUND);
-            //printf("%d\n", line);
-            read_file(FNSOUND, line);
+            read_file(fn_sound, line);
             break;
         case mix:
             line = (rand() % MIX);
-            //printf("%d\n", line);
-            read_file(FNMIX, line);
+            read_file(fn_mix, line);
             break;
         case help:
             puts(program_version);
             puts(doc);
             puts(usage);
-            printf("\nSend bug reports to %s\n", bug_address);
+            printf("\nRead more at %s\n", elphnt_link);
+            printf("Send bug reports to %s\n", bug_address);
             break;
         default:
-            puts("No such category");
+            puts("\nNo such category. INSPIR accepts the following commands:\n\n\twrite\n\tarrange\n\tsound\n\tmix");
             break; 
     }
 }
