@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.6
+ *  INSPIR, v0.7
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -21,7 +21,7 @@
 #define SOUND 37
 #define MIX 20
 
-const char *program_version = "\nINSPIR CLI 0.6";
+const char *program_version = "\nINSPIR CLI 0.7";
 const char *elphnt_link = "<https://elphnt.io/store/inspir-paper/>";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
 
@@ -89,7 +89,7 @@ void parse_line(char* line) {
 //  Reads a line of text from the file
 void read_file(const char *filename, unsigned int line) {
     FILE *cfPtr;
-    char path[50] = "..\\res\\";
+    char path[50] = "src\\c\\inspir\\res\\";
     unsigned int currentline = 0;
     strcat(path, filename);
     if ((cfPtr = fopen(path, "r")) == NULL) {
@@ -105,7 +105,7 @@ void read_file(const char *filename, unsigned int line) {
             }
             currentline++;
         }
-    fclose(cfPtr);
+        fclose(cfPtr);
     }
 }
 
