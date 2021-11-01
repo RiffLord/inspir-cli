@@ -45,10 +45,7 @@ const char *fn_mix = "mixing";
 const char *fn_write = "writing";
 const char *fn_sound = "sound_design";
 
-/*
- *  Associates the string arguments
- *  with the appropriate enum options
- */
+//  Associates the string arguments with the appropriate enum options
 const static struct {
     Command cmd;
     const char *str;
