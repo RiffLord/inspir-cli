@@ -94,7 +94,7 @@ void read_file(const char *filename, unsigned int line) {
             fgets(suggestion, LINECHARS, cfPtr);
             if (currentline == line) {
                 parse_line(suggestion);
-                printf("\n%s\n", suggestion);
+                printf("\n%s", suggestion);
                 break;                
             }
             currentline++;
