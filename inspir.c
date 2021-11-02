@@ -1,5 +1,5 @@
 /*
- *  INSPIR, v0.7
+ *  INSPIR, v0.8
  *  https://elphnt.io/store/inspir-paper/
  *  
  *  @author: Bruno Pezer
@@ -21,7 +21,7 @@
 #define SOUND 37
 #define MIX 20
 
-const char *program_version = "\nINSPIR CLI 0.7";
+const char *program_version = "\nINSPIR CLI 0.8";
 const char *elphnt_link = "<https://elphnt.io/store/inspir-paper/>";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
 
@@ -59,11 +59,8 @@ const static struct {
 
 //  Converts the user input into lowercase
 void parse_str(char *str) {
-    int i = 0;
-    while (str[i]) {
-        str[i] = tolower(str[i]);
-        i++;
-    }
+    for (; *str != '\0'; str++)
+        *str = tolower(*str);
 }
 
 //  Converts the string argument to the corresponding enum command
@@ -76,17 +73,17 @@ Command convert_command(const char *str) {
 
 //  Formats the line of text for display
 void parse_line(char* line) {
-    size_t i = 0;
-    while (line[i]) {
-      if (line[i] == '>') line[i] = '\n';
-      i++;  
+    for (; *line != '\0'; line++) {
+      if (*line == '>') {
+          *line = '\n';
+      }
     }  
 }
 
 //  Reads a line of text from the file
 void read_file(const char *filename, unsigned int line) {
     FILE *cfPtr;
-    char path[50] = "src\\c\\inspir\\res\\";
+    char path[50] = "C:\\Users\\Bruno\\src\\c\\inspir\\res\\";
     unsigned int currentline = 0;
     strcat(path, filename);
     if ((cfPtr = fopen(path, "r")) == NULL) {
